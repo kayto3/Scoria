@@ -47,7 +47,7 @@ switch (event->type)
 		*dep=2;
 		break;
 		case SDLK_SPACE:
-		if(((*saut==0) && (perso->pospersonnage.y>=300))||((*saut==0) && (CollisionParfaite_sol(*perso,*back,255,0,0)!=0)))
+		if((*saut==0) && (CollisionParfaite_sol(*perso,*back,255,0,0)!=0))
 		{
 		*h=perso->pospersonnage.y-150;
 		*saut=1;
