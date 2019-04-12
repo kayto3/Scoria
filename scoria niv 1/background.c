@@ -146,7 +146,7 @@ int collision=0;
 int i=4;
 while((i<7) && (collision==0))
 {
-couleur_obstacle=GetPixel(back.imageM,pos[i].x,pos[i].y);
+couleur_obstacle=GetPixel(back.imageM,pos[i].x+back.camera.x,pos[i].y);
 if((couleur_obstacle.r==r) && (couleur_obstacle.g==g) && (couleur_obstacle.b==b))
 collision=1;
 i++;

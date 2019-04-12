@@ -4,7 +4,7 @@
 #include "background.h"
 #include "personnage.h"
 #include "menu.h"
-
+#include "enigme.h"
 // INITIALISER 
 void Initialiser_Menu(SDL_Surface **ecran,SDL_Surface **imageDeFond,SDL_Surface **bouton1,SDL_Surface **bouton2,SDL_Surface **bouton3,SDL_Surface **bouton4,SDL_Surface **bouton_selection1,SDL_Surface **bouton_selection2,SDL_Surface **bouton_selection3,SDL_Surface **bouton_selection4,SDL_Rect *positionFond,SDL_Rect *posBou1,SDL_Rect *posBou2,SDL_Rect *posBou3,SDL_Rect *posBou4,SDL_Rect *posBouS1,SDL_Rect *posBouS2,SDL_Rect *posBouS3,SDL_Rect *posBouS4,Mix_Music **music,Mix_Chunk **son)
 {
@@ -346,15 +346,20 @@ switch(event.type)
 
 void niveau1(SDL_Surface *ecran)
 {
-int continuer =1;
+int continuer =1,resultat=0,nv=3;
 personnage perso;
 background back;
+SDL_Surface *image=NULL;
 int frame_limit=0;
 int saut=0;
 int h=0;
 int curseur_active=0;
 int dep=0;
 int curseur_x;
+SDL_Rect position_vie;
+image=IMG_Load("Fichier 12_1.png");
+position_vie.x=10;
+position_vie.y=10;
 SDL_Event event;
 frame_limit=SDL_GetTicks()+33;
 limit_fps(frame_limit);
@@ -369,6 +374,7 @@ while (continuer)
 SDL_PollEvent(&event);
 //affichage
         affichage_background(ecran,&back);
+SDL_BlitSurface(image,NULL,ecran,&position_vie);
 	affichage_personnage(ecran,&perso);
 	SDL_Flip(ecran);
 choix_commande(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
@@ -379,6 +385,11 @@ deplacement_personnage(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&
 	perso.personnage = IMG_Load("Kayto2.png");
 gravity(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x);
 scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
+//condition
+if(perso.pospersonnage.x+back.camera.x==600)
+ {resultat=enigme(&nv,ecran);
+perso.pospersonnage.x+=20;
+}
 dep=0;
 }
 SDL_FreeSurface(back.image);

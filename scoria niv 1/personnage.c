@@ -49,7 +49,9 @@ switch (event->type)
 		case SDLK_SPACE:
 		if((*saut==0) && (CollisionParfaite_sol(*perso,*back,255,0,0)!=0))
 		{
-		*h=perso->pospersonnage.y-150;
+		*h=perso->pospersonnage.y-250;
+if(*h<0)
+*h=0;
 		*saut=1;
 		}
 		break;
@@ -67,6 +69,8 @@ void deplacement_personnage(SDL_Event *event,int *continuer,personnage *perso,ba
 	*curseur_active=0;
 	else
 	*dep=1;
+	if(perso->pospersonnage.x+5+back->camera.x>=*curseur_x)
+	*curseur_active=0;
 	}
 	else if((*curseur_active==1) && (perso->pospersonnage.x>*curseur_x))
 	{
@@ -74,26 +78,24 @@ void deplacement_personnage(SDL_Event *event,int *continuer,personnage *perso,ba
 	*curseur_active=0;
 	else
 	*dep=2;
+	if(back->camera.x-perso->pospersonnage.x-5<=*curseur_x)
+	*curseur_active=0;
 	}
 // deplacement clavier
 /*
 switch(*dep)
 	{
 		case 1:
-		perso->pospersonnage.x=perso->pospersonnage.x+10;
 		if(perso->pospersonnage.x>=*curseur_x)
 		*curseur_active=0;
 		break;
 		case 2:
-		perso->pospersonnage.x=perso->pospersonnage.x-10;
 		if(perso->pospersonnage.x<=*curseur_x)
 		*curseur_active=0;
 		break;
-	} */
-
-
+	}
+*/
 }
-
 void gravity(SDL_Event *event,int *continuer,personnage *perso,background *back,int *saut,int *h,int *curseur_active,int *curseur_x)
 {
 // gestion saut et gravite
