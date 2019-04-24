@@ -86,10 +86,12 @@ void deplacement_personnage(SDL_Event *event,int *continuer,personnage *perso,ba
 switch(*dep)
 	{
 		case 1:
+		perso->pospersonnage.x=perso->pospersonnage.x+5;
 		if(perso->pospersonnage.x>=*curseur_x)
 		*curseur_active=0;
 		break;
 		case 2:
+		perso->pospersonnage.x=perso->pospersonnage.x-5;
 		if(perso->pospersonnage.x<=*curseur_x)
 		*curseur_active=0;
 		break;

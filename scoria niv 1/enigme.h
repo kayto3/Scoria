@@ -42,7 +42,7 @@ int initialiser_question(questions *question);
 void afficher_question(SDL_Surface *ecran,questions *question,userinterface *ui);
 
 //fps
-void limit_fps(int limit);
+//void limit_fps(int limit);
 //collision
 SDL_Color GetPixel(SDL_Surface *pSurface,int x,int y);
 int CollisionParfaite(tete Tete,background_enigme back);
@@ -54,6 +54,9 @@ void afficher_lose(SDL_Surface *ecran,userinterface *ui);
 void afficher_countdown(SDL_Surface *ecran,userinterface *ui);
 //input
 void input(int *continuer,SDL_Event *event,int *direction);   
-int enigme(int *nbrvie,SDL_Surface *ecran);     
+int enigme(int *nbrvie,SDL_Surface *ecran);
+// arduino
+int arduinoWriteData(int x);
+int arduinoReadData(int *x);   
 #endif
 

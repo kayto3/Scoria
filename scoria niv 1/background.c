@@ -72,7 +72,6 @@ int i=5;
 while((i<8) && (collision==0))
 {
 couleur_obstacle=GetPixel(back.imageM,pos[i].x+back.camera.x,pos[i].y);
-printf("%d ,%d ,%d \n",couleur_obstacle.r,couleur_obstacle.g,couleur_obstacle.b);
 if((couleur_obstacle.r==r) && (couleur_obstacle.g==g) && (couleur_obstacle.b==b))
 collision=1;
 i++;
@@ -109,7 +108,7 @@ int collision=0;
 int i=3;
 while((i<6) && (collision==0))
 {
-couleur_obstacle=GetPixel(back.imageM,pos[i].x,pos[i].y);
+couleur_obstacle=GetPixel(back.imageM,pos[i].x+back.camera.x,pos[i].y);
 if((couleur_obstacle.r==r) && (couleur_obstacle.g==g) && (couleur_obstacle.b==b))
 collision=1;
 i++;

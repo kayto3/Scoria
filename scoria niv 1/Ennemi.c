@@ -1,21 +1,21 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
-#include <time.h>
+#include "background.h"
+#include "personnage.h"
+#include "enigme.h"
 #include "Ennemi.h"
-#include "Background.h"
+#include <time.h>
 void initialiser_ennemi (enemy *ennemi)
 {
-	ennemi->posennemi.x=100;
-	ennemi->posennemi.y=300;
-	ennemi->ennemi = IMG_Load("draicox.png");
-}
-
-void initialiser_background(background *back)
-{
-	back->positionecran.x=0;
-	back->positionecran.y=0;
-	back->image = IMG_Load("background.png");
+	ennemi->posennemi.x=1800;
+	ennemi->posennemi.y=320;
+	ennemi->direc=0;
+	ennemi->i=0;
+	ennemi->j=0;
+	ennemi->posMax=2300;
+	ennemi->posMin=1500;
+	ennemi->ennemi = IMG_Load("walk1.png");
 }
 
 void affichage_ennemi(SDL_Surface *ecran,enemy *ennemi)
@@ -23,24 +23,6 @@ void affichage_ennemi(SDL_Surface *ecran,enemy *ennemi)
 	SDL_BlitSurface(ennemi->ennemi,NULL,ecran,&ennemi->posennemi);	
 }
 
-void affichage_background(SDL_Surface *ecran,background *back)
-{
-	SDL_BlitSurface(back->image , NULL , ecran , &back->positionecran);
-}
-
-int deplacement_alea (int posmax,int posmin)
-{
-	int pos;
-	srand(time(NULL));
-	pos=rand()%(posmax-posmin+1)+posmin;
-	return pos;
-}
-
-int nombreAleatoire()
-{
-	int aleatoire=rand()%(1);
-	return aleatoire;
-}
 void Remplissage_animation (mouvement *mvt)
 {
  mvt-> mvt_avant [0]=IMG_Load("walk1.png");
@@ -59,37 +41,58 @@ void Remplissage_animation (mouvement *mvt)
  mvt-> mvt_back [5]=IMG_Load("walk13.png");
  mvt-> mvt_back [6]=IMG_Load("walk14.png");
 }
-void Deplacement_annime (mouvement *mvt,enemy *ennemi,background *back,SDL_Surface *ecran,int posMax,int posMin)
+void Deplacement_annime (mouvement *mvt,enemy *ennemi,background *back,SDL_Surface *ecran,personnage *perso)
 {
-int i=0,j=0;	
-while 	(ennemi->posennemi.x<=posMax)
+if(ennemi->posennemi.x>=ennemi->posMax)
+ennemi->direc=0;
+else if (ennemi->posennemi.x<ennemi->posMin)
+ennemi->direc=1;
+if(ennemi->direc==1)
 {	
 	(ennemi->posennemi.x)+=10;
-	SDL_BlitSurface(mvt->mvt_avant[i],NULL,ecran,&ennemi->posennemi);	
-	SDL_Flip(ecran);	
-	affichage_background(ecran,back);
-	SDL_Flip(ecran);
-	i++;
-	if (i==6)
-	i=0;
+	if(perso->pospersonnage.x-ennemi->posennemi.x < 300)
+	SDL_BlitSurface(mvt->mvt_avant[ennemi->i],NULL,ecran,&ennemi->posennemi);	
+	//SDL_Flip(ecran);	
+	//affichage_background(ecran,back);
+	ennemi->i++;
+	if (ennemi->i==6)
+	ennemi->i=0;
 	
 }
-if (ennemi->posennemi.x=posMax)
-{
-	while (ennemi->posennemi.x>posMin)
+else	if (ennemi->direc==0)
 	{	
 	(ennemi->posennemi.x)-=10;
-		
-		SDL_BlitSurface(mvt->mvt_back[j],NULL,ecran,&ennemi->posennemi);
-		SDL_Flip(ecran);
-		affichage_background(ecran,back);
-		SDL_Flip(ecran);
-		j++;
-		if (j==	6)
-		j=0;
+		if(perso->pospersonnage.x-ennemi->posennemi.x < 300)
+		SDL_BlitSurface(mvt->mvt_back[ennemi->j],NULL,ecran,&ennemi->posennemi);
+		//SDL_Flip(ecran);
+		//affichage_background(ecran,back);
+		ennemi->j++;
+		if (ennemi->j==	6)
+		ennemi->j=0;
 		
 	}
 }	
+
+void ennemi_camera(int dep,background *back,enemy *ennemi)
+{
+switch(dep)
+	{
+				
+		case 1: 
+			if (back->camera.x<6363)
+                		ennemi->posennemi.x=ennemi->posennemi.x-5;
+				ennemi->posMin=ennemi->posMin-5;
+				ennemi->posMax=ennemi->posMax-5;
+	
+		break;
+		case 2:
+			if (back->camera.x>0)
+                		ennemi->posennemi.x=ennemi->posennemi.x+5;
+				ennemi->posMin=ennemi->posMin+5;
+				ennemi->posMax=ennemi->posMax+5;
+		break;
+
+	}
 }
 
 /*
