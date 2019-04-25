@@ -9,6 +9,7 @@ int i;
 int j;
 int posMax;
 int posMin;
+int actif;
 }enemy;
 
 typedef struct
@@ -22,5 +23,6 @@ void Remplissage_animation (mouvement *mvt);
 void affichage_ennemi(SDL_Surface *ecran,enemy *ennemi);
 void Deplacement_annime (mouvement *mvt,enemy *ennemi,background *back,SDL_Surface *ecran,personnage *perso);
 void ennemi_camera(int dep,background *back,enemy *ennemi);
+int collision_entite(personnage perso,enemy ennemi,background back);
 
 #endif // Ennemi_H_INCLUDED

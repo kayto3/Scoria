@@ -15,6 +15,7 @@ void initialiser_ennemi (enemy *ennemi)
 	ennemi->j=0;
 	ennemi->posMax=2300;
 	ennemi->posMin=1500;
+	ennemi->actif=0;
 	ennemi->ennemi = IMG_Load("walk1.png");
 }
 
@@ -93,6 +94,14 @@ switch(dep)
 		break;
 
 	}
+}
+
+int collision_entite(personnage perso,enemy ennemi,background back)
+{
+if((perso.pospersonnage.x + perso.pospersonnage.w < ennemi.posennemi.x) || (perso.pospersonnage.x > ennemi.posennemi.x + ennemi.posennemi.w) || (perso.pospersonnage.y + perso.pospersonnage.h < ennemi.posennemi.y) || (perso.pospersonnage.y > ennemi.posennemi.y + ennemi.posennemi.h))
+return 0; // pas de collision
+else
+return 1;
 }
 
 /*

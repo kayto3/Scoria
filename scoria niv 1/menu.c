@@ -384,6 +384,7 @@ SDL_PollEvent(&event);
 	SDL_BlitSurface(image,NULL,ecran,&position_vie);
 	affichage_personnage(ecran,&perso);
 //affichage ennemi
+	if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
 	SDL_Flip(ecran);
 choix_commande(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
@@ -395,6 +396,8 @@ deplacement_personnage(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&
 gravity(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x);
 scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
 ennemi_camera(dep,&back,&ennemi);
+if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
+ennemi.actif=enigme(&nv,ecran);
 /*condition
 if(perso.pospersonnage.x+back.camera.x==600)
  {resultat=enigme(&nv,ecran);
