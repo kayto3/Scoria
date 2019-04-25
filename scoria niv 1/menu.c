@@ -361,6 +361,7 @@ SDL_Rect position_vie;
 //ennemi
 enemy ennemi;
 mouvement mvt;
+ennemi.actif=0;
 int i=0,j=0;
 image=IMG_Load("Fichier 12_1.png");
 position_vie.x=10;
@@ -375,27 +376,24 @@ initialiser_personnage(&perso);
 initialiser_ennemi (&ennemi);
 initialiser_background(&back);
 Remplissage_animation (&mvt);
+Remplissage_animation_perso(&perso);
 SDL_EnableKeyRepeat(20,20);
 while (continuer)
 {
 SDL_PollEvent(&event);
+choix_commande(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
+deplacement_personnage(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
+gravity(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x);
+scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
+ennemi_camera(dep,&back,&ennemi);
 //affichage
         affichage_background(ecran,&back);
 	SDL_BlitSurface(image,NULL,ecran,&position_vie);
-	affichage_personnage(ecran,&perso);
+	Anime_perso(dep,ecran,&perso);
 //affichage ennemi
 	if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
 	SDL_Flip(ecran);
-choix_commande(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
-deplacement_personnage(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
-	if(dep==1)
-	perso.personnage = IMG_Load("Kayto1.png");
-	else if(dep==2)
-	perso.personnage = IMG_Load("Kayto2.png");
-gravity(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x);
-scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
-ennemi_camera(dep,&back,&ennemi);
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
 ennemi.actif=enigme(&nv,ecran);
 if (perso.pospersonnage.y >= 600)

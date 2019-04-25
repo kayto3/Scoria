@@ -1,5 +1,12 @@
 #ifndef Ennemi_H_INCLUDED
 #define Ennemi_H_INCLUDED
+
+typedef struct
+{
+SDL_Surface *mvt_avant[8];
+SDL_Surface *mvt_back[8];
+}mouvement;
+
 typedef struct
 {
 SDL_Surface *ennemi;
@@ -10,13 +17,8 @@ int j;
 int posMax;
 int posMin;
 int actif;
+mouvement mvt;
 }enemy;
-
-typedef struct
-{
-SDL_Surface *mvt_avant[8];
-SDL_Surface *mvt_back[8];
-}mouvement;
 
 void initialiser_ennemi (enemy *ennemi);
 void Remplissage_animation (mouvement *mvt);

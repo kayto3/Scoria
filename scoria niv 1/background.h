@@ -12,8 +12,16 @@ SDL_Rect camera;
 
 typedef struct
 {
+SDL_Surface *mvt_avant[8];
+SDL_Surface *mvt_back[8];
+}mouvement2;
+
+typedef struct
+{
 SDL_Surface *personnage;
 SDL_Rect pospersonnage;
+mouvement2 mvt;
+int i,j;
 }personnage;
 
 void initialiser_background(background *back);
