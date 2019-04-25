@@ -398,11 +398,20 @@ scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
 ennemi_camera(dep,&back,&ennemi);
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
 ennemi.actif=enigme(&nv,ecran);
-/*condition
-if(perso.pospersonnage.x+back.camera.x==600)
- {resultat=enigme(&nv,ecran);
-perso.pospersonnage.x+=20;
-} */
+if (perso.pospersonnage.y >= 600)
+{
+nv --;
+initialiser_camera(&back);
+initialiser_personnage(&perso);
+initialiser_background(&back);
+initialiser_ennemi (&ennemi);
+if (nv == 2)
+image = IMG_Load("Fichier 11_1.png");
+else if(nv == 1)
+image = IMG_Load("Fichier 10_1.png");
+else if(nv == 0)
+continuer=0;
+}
 dep=0;
 }
 SDL_FreeSurface(back.image);
