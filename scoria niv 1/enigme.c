@@ -362,7 +362,7 @@ int enigme(int *nbrvie,SDL_Surface *ecran)
 {
 
     int continuer =1,direction=0,frame_limit=0,random,random_question,resultat=0,i;
-
+	int x=0;
     questions question;
     userinterface  ui;
     tete Tete;
@@ -441,6 +441,14 @@ int enigme(int *nbrvie,SDL_Surface *ecran)
         //printf("%d\n",Tete.pos_tete.x);
 
         SDL_Flip(ecran);
+// imput arduino
+arduinoReadData(&x);
+if(x==1)
+direction=1;
+else if(x==2)
+direction=-1;
+printf("test: %d \n",direction);
+printf("test2: %d \n",x);
         switch (event.type)
         {
         case SDL_QUIT:
@@ -458,8 +466,6 @@ int enigme(int *nbrvie,SDL_Surface *ecran)
                 break;
             case SDLK_DOWN:
                 direction=-1;
-
-
                 break;
             }
             break;
