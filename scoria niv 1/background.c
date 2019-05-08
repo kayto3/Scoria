@@ -152,52 +152,27 @@ i++;
 }
 return collision;
 }
-/*
-void scrolling(int dep,int saut,int h,SDL_Rect *camera,personnage *perso)
-{
-	if (dep == 2)
-    {
-        camera->x -= 10;
-
-        if (camera->x < 0)
-        {
-            camera->x = 0;
-        }
-    }
-    else if (dep == 1)
-    {
-        camera->x += 10;
-
-        if (camera->x + 800 >= 12725) // if (map.startX + SCREEN_WIDTH >= map.maxX)
-        {
-            camera->x = 12725 - 800;  //map.startX = map.maxX - SCREEN_WIDTH;
-        }
-    }
-
-} */
 void scrolling(int dep,int saut,int h,background *back,personnage *perso,int *curseur_active,int *curseur_x)
 {
-	switch(dep)
-	{
 				
-		case 1: 
+		if(perso->vx>0)
+		{
 			if (back->camera.x<6363)
-                		back->camera.x=back->camera.x+5;
+                		back->camera.x=back->camera.x+perso->vx;
 			if (((perso->pospersonnage.x<300)||((back->camera.x>=6363))&&(perso->pospersonnage.x<1100)))
-				perso->pospersonnage.x=perso->pospersonnage.x+5;
+				perso->pospersonnage.x=perso->pospersonnage.x+perso->vx;
 			if(perso->pospersonnage.x>=*curseur_x)
 			*curseur_active=0;
-	
-		break;
-		case 2:
+		}
+		else if(perso->vx<0)
+		{
 			if (back->camera.x>0)
-                		back->camera.x=back->camera.x-5;
+                		back->camera.x=back->camera.x+perso->vx;
 	    		if (((back->camera.x!=0)&&(perso->pospersonnage.x>=150))||((back->camera.x==0)&&(perso->pospersonnage.x==50)))
-				perso->pospersonnage.x=perso->pospersonnage.x-5;
+				perso->pospersonnage.x=perso->pospersonnage.x+perso->vx;
 			if(perso->pospersonnage.x<=*curseur_x)
 			*curseur_active=0;
-		break;
+		}
 
-	}
 }
 

@@ -20,6 +20,8 @@ typedef struct
 {
 SDL_Surface *personnage;
 SDL_Rect pospersonnage;
+int vx;
+int vy;
 mouvement2 mvt;
 int i,j;
 }personnage;

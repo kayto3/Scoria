@@ -9,6 +9,8 @@ void initialiser_personnage(personnage *perso)
 {
 perso->pospersonnage.x=100;
 perso->pospersonnage.y=100;
+perso->vx=0;
+perso->vy=0;
 perso->i=0;
 perso->j=0;
 perso->personnage = IMG_Load("Animation_Personnage/walk_1_right.png");
@@ -21,6 +23,9 @@ SDL_BlitSurface(perso->personnage , NULL , ecran, &perso->pospersonnage);
 
 void choix_commande(SDL_Event *event,int *continuer,personnage *perso,background *back,int *saut,int *h,int *curseur_active,int *curseur_x,int *dep)
 {
+Uint8 * keys;
+int numkeys;
+keys = SDL_GetKeyState(&numkeys);
 // choix action
 switch (event->type)
 {
@@ -34,6 +39,7 @@ switch (event->type)
                 *curseur_x=event->motion.x;
             }
 	break;
+/*
 	case SDL_KEYDOWN:
 	switch(event->key.keysym.sym)
 	{
@@ -55,14 +61,44 @@ switch (event->type)
 		if(*h<0)
 		*h=0;
 		*saut=1;
+		perso->vy=perso->pospersonnage.y;
 		}
+		if (*saut==1)
+		perso->vy -= 40;
 		break;
 	}
 	break;
+*/
+}
+
+if (keys[SDLK_ESCAPE])
+*continuer=0;
+if (keys[SDLK_RIGHT])
+{
+if(CollisionParfaite_droite(*perso,*back,0,0,0)==0)
+		*dep=1;
+}
+if (keys[SDLK_LEFT])
+{
+if(CollisionParfaite_gauche(*perso,*back,0,0,0)==0)
+		*dep=2;
+}
+if (keys[SDLK_SPACE])
+{
+if((*saut==0) && (CollisionParfaite_sol(*perso,*back,255,0,0)!=0))
+		{
+		*h=perso->pospersonnage.y-250;
+		if(*h<0)
+		*h=0;
+		*saut=1;
+		perso->vy=perso->pospersonnage.y;
+		}
+		if (*saut==1)
+		perso->vy -= 40;
 }
 }
 
-void deplacement_personnage(SDL_Event *event,int *continuer,personnage *perso,background *back,int *saut,int *h,int *curseur_active,int *curseur_x,int *dep)
+void deplacement_souris(SDL_Event *event,int *continuer,personnage *perso,background *back,int *saut,int *h,int *curseur_active,int *curseur_x,int *dep)
 {
 // deplacement souris
 	if((*curseur_active==1) && (perso->pospersonnage.x<*curseur_x))
@@ -71,7 +107,7 @@ void deplacement_personnage(SDL_Event *event,int *continuer,personnage *perso,ba
 	*curseur_active=0;
 	else
 	*dep=1;
-	if(perso->pospersonnage.x+5+back->camera.x>=*curseur_x)
+	if(perso->pospersonnage.x+perso->vx+back->camera.x>=*curseur_x)
 	*curseur_active=0;
 	}
 	else if((*curseur_active==1) && (perso->pospersonnage.x>*curseur_x))
@@ -80,35 +116,53 @@ void deplacement_personnage(SDL_Event *event,int *continuer,personnage *perso,ba
 	*curseur_active=0;
 	else
 	*dep=2;
-	if(back->camera.x-perso->pospersonnage.x-5<=*curseur_x)
+	if(back->camera.x-perso->pospersonnage.x-perso->vx<=*curseur_x)
 	*curseur_active=0;
 	}
-// deplacement clavier
-/*
-switch(*dep)
-	{
-		case 1:
-		perso->pospersonnage.x=perso->pospersonnage.x+5;
-		if(perso->pospersonnage.x>=*curseur_x)
-		*curseur_active=0;
-		break;
-		case 2:
-		perso->pospersonnage.x=perso->pospersonnage.x-5;
-		if(perso->pospersonnage.x<=*curseur_x)
-		*curseur_active=0;
-		break;
-	}
-*/
 }
-void gravity(SDL_Event *event,int *continuer,personnage *perso,background *back,int *saut,int *h,int *curseur_active,int *curseur_x)
+
+void deplacement_perso(personnage *perso,int dep,int saut)
+{
+	int lateralspeed = 2;
+	int airlateralspeedfacteur = 1;
+	int maxhspeed = 10;
+	int adherance = 2;
+	int impulsion = 6;
+	int factsautmaintenu = 3;
+// acceleration 
+	Uint8 * keys;
+	int numkeys;
+	keys = SDL_GetKeyState(&numkeys);
+	if (keys[SDLK_LSHIFT])
+	maxhspeed = 20;
+// controle lateral
+	if (saut==1) // (*2)
+		lateralspeed*= airlateralspeedfacteur;
+	if (dep==2) // (*1)
+		perso->vx-=lateralspeed;
+	if (dep==1)
+		perso->vx+=lateralspeed;
+	if ((perso->vy==0) && (dep==0)) // (*3)
+		perso->vx/=adherance;
+// limite vitesse
+	if (perso->vx>maxhspeed) // (*4)
+		perso->vx = maxhspeed;
+	if (perso->vx<-maxhspeed)
+		perso->vx = -maxhspeed;
+}
+void gravity(personnage *perso,background *back,int *saut,int *h)
 {
 // gestion saut et gravite
-	if((*saut==1) && (perso->pospersonnage.y>*h))
+		if(perso->vy<*h)
+		perso->vy = *h;
+	if((*saut==1) && (perso->pospersonnage.y>perso->vy))
 	perso->pospersonnage.y=perso->pospersonnage.y-10;
-	if((*saut==1) && (perso->pospersonnage.y<=*h))
+	if((*saut==1) && (perso->pospersonnage.y<=perso->vy))
 	*saut=0;
 	if((*saut==0) && (CollisionParfaite_sol(*perso,*back,255,0,0)==0))
 	perso->pospersonnage.y=perso->pospersonnage.y+10;
+	if((*saut==0) && (CollisionParfaite_sol(*perso,*back,255,0,0)!=0))
+	perso->vy=0;
 	
 }
 
