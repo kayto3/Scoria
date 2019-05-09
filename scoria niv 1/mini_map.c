@@ -31,12 +31,7 @@ void afficher_pointer(SDL_Surface *ecran,mini_map *m)
 
 void main_mini_map(SDL_Surface *ecran,int dep,mini_map *m)
 {
-int continuer=0;
 
-
-
-while (continuer)
-{
 	afficher_map(ecran,m);
 		
 	if (dep==1)
@@ -49,7 +44,7 @@ while (continuer)
 	}
 afficher_pointer(ecran,m);
 	SDL_Flip(ecran);
-}
+
 
 
 }
