@@ -35,7 +35,6 @@ void main_mini_map(SDL_Surface *ecran,int dep,mini_map *m,personnage *perso,back
 {
 	if (m->pos_pointer.x<320)
 	m->pos_pointer.x=320;
-	printf("perso+cam=%d\n pointer=%d\n",((perso->pospersonnage.x + back->camera.x)/5)+300,m->pos_pointer.x );
 	afficher_map(ecran,m);
 	/*if( (((perso->pospersonnage.x + back->camera.x)/5)+300) - m->pos_pointer.x >=10 )	
 		
