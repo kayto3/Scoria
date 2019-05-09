@@ -29,7 +29,7 @@ void afficher_pointer(SDL_Surface *ecran,mini_map *m)
         SDL_Flip(ecran);
 }
 
-/*void main_mini_map(SDL_Surface *ecran,int dep)
+void main_mini_map(SDL_Surface *ecran,int dep)
 {
 int continuer=0;
 mini_map m;
@@ -53,7 +53,7 @@ afficher_pointer(ecran,&m);
 }
 
 
-}*/
+}
 void scrolling_mini_map(int dep,mini_map *m,int *curseur_active,int *curseur_x)
 {
 	switch(dep)
