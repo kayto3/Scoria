@@ -73,26 +73,26 @@ else	if (ennemi->direc==0)
 	}
 }	
 
-void ennemi_camera(int dep,background *back,enemy *ennemi)
+void ennemi_camera(int dep,background *back,enemy *ennemi,personnage perso)
 {
-switch(dep)
-	{
-				
-		case 1: 
+		if(perso.vx>0)
+		{
 			if (back->camera.x<6363)
-                		ennemi->posennemi.x=ennemi->posennemi.x-5;
-				ennemi->posMin=ennemi->posMin-5;
-				ennemi->posMax=ennemi->posMax-5;
-	
-		break;
-		case 2:
+			{
+                		ennemi->posennemi.x=ennemi->posennemi.x-perso.vx;
+				ennemi->posMin=ennemi->posMin-perso.vx;
+				ennemi->posMax=ennemi->posMax-perso.vx;
+			}
+		}
+		else if(perso.vx<0)
+		{
 			if (back->camera.x>0)
-                		ennemi->posennemi.x=ennemi->posennemi.x+5;
-				ennemi->posMin=ennemi->posMin+5;
-				ennemi->posMax=ennemi->posMax+5;
-		break;
-
-	}
+                		{
+				ennemi->posennemi.x=ennemi->posennemi.x-perso.vx;
+				ennemi->posMin=ennemi->posMin-perso.vx;
+				ennemi->posMax=ennemi->posMax-perso.vx;
+				}
+		}
 }
 
 int collision_entite(personnage perso,enemy ennemi,background back)

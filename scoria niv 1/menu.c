@@ -382,10 +382,11 @@ while (continuer)
 {
 SDL_PollEvent(&event);
 choix_commande(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
-deplacement_personnage(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
-gravity(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x);
+deplacement_souris(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
+deplacement_perso(&perso,dep,saut);
+gravity(&perso,&back,&saut,&h);
 scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
-ennemi_camera(dep,&back,&ennemi);
+ennemi_camera(dep,&back,&ennemi,perso);
 //affichage
         affichage_background(ecran,&back);
 	SDL_BlitSurface(image,NULL,ecran,&position_vie);
