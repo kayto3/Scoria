@@ -20,13 +20,13 @@ void initialiser_mini_map(mini_map *m)
 void afficher_map(SDL_Surface *ecran,mini_map *m)
 {
 	SDL_BlitSurface(m->map,NULL,ecran,&m->pos_map);
-        SDL_Flip(ecran);
+
 }
 void afficher_pointer(SDL_Surface *ecran,mini_map *m)
 {
 	SDL_BlitSurface(m->pointer,NULL,ecran,&m->pos_pointer);
 
-        SDL_Flip(ecran);
+
 }
 
 void main_mini_map(SDL_Surface *ecran,int dep,mini_map *m)
@@ -43,7 +43,7 @@ void main_mini_map(SDL_Surface *ecran,int dep,mini_map *m)
 		m->pos_pointer.x=m->pos_pointer.x+10;
 	}
 afficher_pointer(ecran,m);
-	SDL_Flip(ecran);
+
 
 
 
