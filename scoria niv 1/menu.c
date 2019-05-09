@@ -350,6 +350,7 @@ void niveau1(SDL_Surface *ecran)
 {
 int continuer =1,resultat=0,nv=3;
 personnage perso;
+mini_map m;
 background back;
 SDL_Surface *image=NULL;
 int frame_limit=0;
@@ -378,6 +379,7 @@ initialiser_ennemi (&ennemi);
 initialiser_background(&back);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
+initialiser_mini_map(&m);
 SDL_EnableKeyRepeat(20,20);
 while (continuer)
 {
@@ -388,12 +390,15 @@ deplacement_perso(&perso,dep,saut);
 gravity(&perso,&back,&saut,&h);
 scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
 ennemi_camera(dep,&back,&ennemi,perso);
-//MINI MAP
-main_mini_map(ecran,dep);
+
+
 //affichage
         affichage_background(ecran,&back);
 	SDL_BlitSurface(image,NULL,ecran,&position_vie);
 	Anime_perso(dep,ecran,&perso);
+//MINI MAP
+main_mini_map(ecran,dep,&m);
+
 //affichage ennemi
 	if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);

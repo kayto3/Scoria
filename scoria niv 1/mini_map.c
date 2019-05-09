@@ -29,26 +29,25 @@ void afficher_pointer(SDL_Surface *ecran,mini_map *m)
         SDL_Flip(ecran);
 }
 
-void main_mini_map(SDL_Surface *ecran,int dep)
+void main_mini_map(SDL_Surface *ecran,int dep,mini_map *m)
 {
 int continuer=0;
-mini_map m;
-initialiser_mini_map(&m);
+
 
 
 while (continuer)
 {
-	afficher_map(ecran,&m);
+	afficher_map(ecran,m);
 		
 	if (dep==1)
 	{
-		m.pos_pointer.x=m.pos_pointer.x+10;
+		m->pos_pointer.x=m->pos_pointer.x+10;
 	}
 	if (dep==2)
 	{	
-		m.pos_pointer.x=m.pos_pointer.x+10;
+		m->pos_pointer.x=m->pos_pointer.x+10;
 	}
-afficher_pointer(ecran,&m);
+afficher_pointer(ecran,m);
 	SDL_Flip(ecran);
 }
 
