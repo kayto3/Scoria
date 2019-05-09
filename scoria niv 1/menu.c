@@ -356,6 +356,7 @@ SDL_Surface *image=NULL;
 int frame_limit=0;
 int saut=0;
 int h=0;
+int v=1;
 int curseur_active=0;
 int dep=0;
 int curseur_x;
@@ -397,7 +398,12 @@ ennemi_camera(dep,&back,&ennemi,perso);
 	SDL_BlitSurface(image,NULL,ecran,&position_vie);
 	Anime_perso(dep,ecran,&perso);
 //MINI MAP
-main_mini_map(ecran,dep,&m);
+
+
+main_mini_map(ecran,dep,&m,&perso,&back);
+
+if (dep!=0)
+v++;
 
 //affichage ennemi
 	if(ennemi.actif==0)
