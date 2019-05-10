@@ -377,7 +377,7 @@ frame_limit=SDL_GetTicks()+33;
 initialiser_camera(&back);
 initialiser_personnage(&perso);
 initialiser_ennemi (&ennemi,1800,320,2300,1500);
-initialiser_ennemi (&ennemi2,3500,320,3800,3000);
+initialiser_ennemi (&ennemi2,3500,320,3800,3200);
 initialiser_background(&back);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
@@ -420,7 +420,7 @@ initialiser_camera(&back);
 initialiser_personnage(&perso);
 initialiser_background(&back);
 initialiser_ennemi (&ennemi,1800,320,2300,1500);
-initialiser_ennemi (&ennemi2,3500,320,3800,3000);
+initialiser_ennemi (&ennemi2,3500,320,3800,3200);
 if (nv == 2)
 image = IMG_Load("Fichier 11_1.png");
 else if(nv == 1)

@@ -91,7 +91,43 @@ if (ennemi->posennemi.x=posMax)
 	}
 }	
 }
+/*
+void MoveIA(enemy *ennemi,personnage perso,int *stat,int positionO)
+{
 
+int distance;
+ennemi->direc=0;
+  if(ennemi->posennemi.x>=perso.pospersonnage.x)
+    distance=ennemi->posennemi.x-perso.pospersonnage.x;
+  else
+    distance=perso.pospersonnage.x-ennemi->posennemi.x;
+if(distance<50)
+*stat=1;
+else 
+*stat=0;
+    if(distance<200)
+      {
+        if(ennemi->posennemi.x>=perso.pospersonnage.x)
+          ennemi->direc=0;
+        else
+          ennemi->direc=1;
+      }
+      else
+    {  if(ennemi->posMin>=ennemi->posennemi.x)
+          ennemi->direc=1;
+      if(ennemi->posMax<=ennemi->posennemi.x)
+        ennemi->direc=0;
+	}
+      if(ennemi->direc==1)
+      {
+        ennemi->posennemi.x+=5;
+      }
+      if(ennemi->direc==0)
+      {
+        ennemi->posennemi.x-=5;
+      }
+}
+*/
 /*
 int collide(personnage *player,enemy *monster)
 {
