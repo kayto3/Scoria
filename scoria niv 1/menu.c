@@ -1,6 +1,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
 #include "background.h"
 #include "personnage.h"
 #include "menu.h"
@@ -8,6 +9,7 @@
 #include "Ennemi.h"
 #include "mini_map.h"
 #include "objet.h"
+#define TEMPS       30 // Le temps qu'il y a entre chaque augmentation de l'angle.
 // INITIALISER 
 void Initialiser_Menu(SDL_Surface **ecran,SDL_Surface **imageDeFond,SDL_Surface **bouton1,SDL_Surface **bouton2,SDL_Surface **bouton3,SDL_Surface **bouton4,SDL_Surface **bouton_selection1,SDL_Surface **bouton_selection2,SDL_Surface **bouton_selection3,SDL_Surface **bouton_selection4,SDL_Rect *positionFond,SDL_Rect *posBou1,SDL_Rect *posBou2,SDL_Rect *posBou3,SDL_Rect *posBou4,SDL_Rect *posBouS1,SDL_Rect *posBouS2,SDL_Rect *posBouS3,SDL_Rect *posBouS4,Mix_Music **music,Mix_Chunk **son)
 {
@@ -364,6 +366,7 @@ int stat=0;
 //score
 score scor;
 int scoree=0;
+int tempsPrecedent = 0, tempsActuel = 0;
 SDL_Rect position_vie;
 //ennemi
 enemy ennemi,ennemi2;
@@ -426,6 +429,13 @@ objet_camera(dep,&back,&obj3,perso);
 	Anime_perso(dep,ecran,&perso);
 
 printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.pospersonnage.y);
+//rotozoom
+Rotozoom(&obj1);
+obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj2);
+obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj3);
+obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
 //affichage ennemi
 	if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);

@@ -1,6 +1,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
 #include "background.h"
 #include "personnage.h"
 #include "enigme.h"
@@ -11,6 +12,7 @@ void initialiser_objet(objet *obj,int x,int y)
 {
 	obj->pos.x=x;
 	obj->pos.y=y;
+	obj->angle=0;
 	obj->image = IMG_Load("Objet.png");
 }
 
@@ -23,7 +25,7 @@ void initialiser_score(score *scor,int x,int y)
 
 void affichage_objet(SDL_Surface *ecran,objet *obj)
 {
-	SDL_BlitSurface(obj->image,NULL,ecran,&obj->pos);	
+	SDL_BlitSurface(obj->rotation,NULL,ecran,&obj->pos);	
 }
 
 void objet_camera(int dep,background *back,objet *obj,personnage perso)
@@ -58,4 +60,37 @@ else if (scoree == 3)
 scor->image=IMG_Load("trois.png");
 SDL_BlitSurface(scor->image,NULL,ecran,&scor->pos);
 }
+
+void Rotozoom(objet *obj)
+{
+            obj->angle += 10; //On augmente l'angle pour que l'image tourne sur elle-même.
+//if(*angle>=260)
+//*angle=0;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -4,8 +4,10 @@
 typedef struct
 {
 SDL_Surface *image;
+SDL_Surface *rotation;
 SDL_Rect pos;
 int actif;
+double angle;
 }objet;
 
 typedef struct
@@ -20,5 +22,6 @@ void initialiser_score(score *scor,int x,int y);
 void objet_camera(int dep,background *back,objet *obj,personnage perso);
 int collision_obj(personnage perso,objet obj,background back);
 void maj_score(SDL_Surface *ecran,score *scor,int scoree);
+void Rotozoom(objet *obj);
 
 #endif // objet_H_INCLUDED
