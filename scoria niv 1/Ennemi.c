@@ -97,7 +97,7 @@ void ennemi_camera(int dep,background *back,enemy *ennemi,personnage perso)
 
 int collision_entite(personnage perso,enemy ennemi,background back)
 {
-if((perso.pospersonnage.x + perso.pospersonnage.w < ennemi.posennemi.x) || (perso.pospersonnage.x > ennemi.posennemi.x + ennemi.posennemi.w))
+if((perso.pospersonnage.x + perso.pospersonnage.w < ennemi.posennemi.x) || (perso.pospersonnage.x > ennemi.posennemi.x + ennemi.posennemi.w) || (perso.pospersonnage.y + perso.pospersonnage.h < ennemi.posennemi.y) || (perso.pospersonnage.y > ennemi.posennemi.y + ennemi.posennemi.h ))
 return 0; // pas de collision
 else
 return 1;

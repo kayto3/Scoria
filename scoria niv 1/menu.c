@@ -7,6 +7,7 @@
 #include "enigme.h"
 #include "Ennemi.h"
 #include "mini_map.h"
+#include "objet.h"
 // INITIALISER 
 void Initialiser_Menu(SDL_Surface **ecran,SDL_Surface **imageDeFond,SDL_Surface **bouton1,SDL_Surface **bouton2,SDL_Surface **bouton3,SDL_Surface **bouton4,SDL_Surface **bouton_selection1,SDL_Surface **bouton_selection2,SDL_Surface **bouton_selection3,SDL_Surface **bouton_selection4,SDL_Rect *positionFond,SDL_Rect *posBou1,SDL_Rect *posBou2,SDL_Rect *posBou3,SDL_Rect *posBou4,SDL_Rect *posBouS1,SDL_Rect *posBouS2,SDL_Rect *posBouS3,SDL_Rect *posBouS4,Mix_Music **music,Mix_Chunk **son)
 {
@@ -360,10 +361,17 @@ int curseur_active=0;
 int dep=0;
 int curseur_x;
 int stat=0;
+//score
+score scor;
+int scoree=0;
 SDL_Rect position_vie;
 //ennemi
 enemy ennemi,ennemi2;
 mouvement mvt;
+objet obj1,obj2,obj3;
+obj1.actif=0;
+obj2.actif=0;
+obj3.actif=0;
 ennemi.actif=0;
 int i=0,j=0;
 image=IMG_Load("Fichier 12_1.png");
@@ -378,6 +386,10 @@ initialiser_camera(&back);
 initialiser_personnage(&perso);
 initialiser_ennemi (&ennemi,1800,320,2300,1500);
 initialiser_ennemi (&ennemi2,3500,320,3800,3200);
+initialiser_objet(&obj1,1010,180);
+initialiser_objet(&obj2,2544,180);
+initialiser_objet(&obj3,4324,230);
+initialiser_score(&scor,10,90);
 initialiser_background(&back);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
@@ -393,17 +405,27 @@ gravity(&perso,&back,&saut,&h);
 scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
 ennemi_camera(dep,&back,&ennemi,perso);
 ennemi_camera(dep,&back,&ennemi2,perso);
+objet_camera(dep,&back,&obj1,perso);
+objet_camera(dep,&back,&obj2,perso);
+objet_camera(dep,&back,&obj3,perso);
 
 
 //affichage
         affichage_background(ecran,&back);
 	SDL_BlitSurface(image,NULL,ecran,&position_vie);
-	Anime_perso(dep,ecran,&perso);
+	maj_score(ecran,&scor,scoree);
 //MINI MAP
+	main_mini_map(ecran,dep,&m,&perso,&back);
+//affichage objet
+	if((perso.pospersonnage.x-obj1.pos.x < 300) && (obj1.actif==0))
+	affichage_objet(ecran,&obj1);
+	if((perso.pospersonnage.x-obj2.pos.x < 300) && (obj2.actif==0))
+	affichage_objet(ecran,&obj2);
+	if((perso.pospersonnage.x-obj3.pos.x < 300) && (obj3.actif==0))
+	affichage_objet(ecran,&obj3);
+	Anime_perso(dep,ecran,&perso);
 
-
-main_mini_map(ecran,dep,&m,&perso,&back);
-printf("perso: %d / ennemi: %d , %d \n",perso.pospersonnage.x,ennemi2.posennemi.x,ennemi2.posennemi.y);
+printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.pospersonnage.y);
 //affichage ennemi
 	if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
@@ -411,8 +433,25 @@ printf("perso: %d / ennemi: %d , %d \n",perso.pospersonnage.x,ennemi2.posennemi.
 	if(perso.pospersonnage.x-ennemi2.posennemi.x < 300)
 	affichage_ennemi(ecran,&ennemi2);
 	SDL_Flip(ecran);
-//if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
-//ennemi.actif=enigme(&nv,ecran);
+//collision ennemi
+if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
+ennemi.actif=enigme(&nv,ecran);
+//collision objet
+if((collision_obj(perso,obj1,back)==1) && (obj1.actif==0))
+{
+obj1.actif=1;
+scoree++;
+}
+if((collision_obj(perso,obj2,back)==1) && (obj2.actif==0))
+{
+obj2.actif=1;
+scoree++;
+}
+if((collision_obj(perso,obj3,back)==1) && (obj3.actif==0))
+{
+obj3.actif=1;
+scoree++;
+}
 if (perso.pospersonnage.y >= 600)
 {
 nv --;
@@ -421,6 +460,10 @@ initialiser_personnage(&perso);
 initialiser_background(&back);
 initialiser_ennemi (&ennemi,1800,320,2300,1500);
 initialiser_ennemi (&ennemi2,3500,320,3800,3200);
+initialiser_objet(&obj1,1010,180);
+initialiser_objet(&obj2,2544,180);
+initialiser_objet(&obj3,4324,230);
+initialiser_score(&scor,10,90);
 if (nv == 2)
 image = IMG_Load("Fichier 11_1.png");
 else if(nv == 1)
