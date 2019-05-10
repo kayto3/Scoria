@@ -356,13 +356,13 @@ SDL_Surface *image=NULL;
 int frame_limit=0;
 int saut=0;
 int h=0;
-int v=1;
 int curseur_active=0;
 int dep=0;
 int curseur_x;
+int stat=0;
 SDL_Rect position_vie;
 //ennemi
-enemy ennemi;
+enemy ennemi,ennemi2;
 mouvement mvt;
 ennemi.actif=0;
 int i=0,j=0;
@@ -376,7 +376,8 @@ frame_limit=SDL_GetTicks()+33;
 //initialiser
 initialiser_camera(&back);
 initialiser_personnage(&perso);
-initialiser_ennemi (&ennemi);
+initialiser_ennemi (&ennemi,1800,320,2300,1500);
+initialiser_ennemi (&ennemi2,3500,320,3800,3000);
 initialiser_background(&back);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
@@ -391,6 +392,7 @@ deplacement_perso(&perso,dep,saut);
 gravity(&perso,&back,&saut,&h);
 scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
 ennemi_camera(dep,&back,&ennemi,perso);
+ennemi_camera(dep,&back,&ennemi2,perso);
 
 
 //affichage
@@ -401,23 +403,24 @@ ennemi_camera(dep,&back,&ennemi,perso);
 
 
 main_mini_map(ecran,dep,&m,&perso,&back);
-
-if (dep!=0)
-v++;
-
+printf("perso: %d / ennemi: %d , %d \n",perso.pospersonnage.x,ennemi2.posennemi.x,ennemi2.posennemi.y);
 //affichage ennemi
 	if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
+	MoveIA(&ennemi2,perso,&stat,200);
+	if(perso.pospersonnage.x-ennemi2.posennemi.x < 300)
+	affichage_ennemi(ecran,&ennemi2);
 	SDL_Flip(ecran);
-if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
-ennemi.actif=enigme(&nv,ecran);
+//if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
+//ennemi.actif=enigme(&nv,ecran);
 if (perso.pospersonnage.y >= 600)
 {
 nv --;
 initialiser_camera(&back);
 initialiser_personnage(&perso);
 initialiser_background(&back);
-initialiser_ennemi (&ennemi);
+initialiser_ennemi (&ennemi,1800,320,2300,1500);
+initialiser_ennemi (&ennemi2,3500,320,3800,3000);
 if (nv == 2)
 image = IMG_Load("Fichier 11_1.png");
 else if(nv == 1)

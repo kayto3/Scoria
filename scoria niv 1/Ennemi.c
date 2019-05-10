@@ -6,15 +6,15 @@
 #include "enigme.h"
 #include "Ennemi.h"
 #include <time.h>
-void initialiser_ennemi (enemy *ennemi)
+void initialiser_ennemi (enemy *ennemi,int x,int y,int posMax,int posMin)
 {
-	ennemi->posennemi.x=1800;
-	ennemi->posennemi.y=320;
+	ennemi->posennemi.x=x;
+	ennemi->posennemi.y=y;
 	ennemi->direc=0;
 	ennemi->i=0;
 	ennemi->j=0;
-	ennemi->posMax=2300;
-	ennemi->posMin=1500;
+	ennemi->posMax=posMax;
+	ennemi->posMin=posMin;
 	ennemi->ennemi = IMG_Load("walk1.png");
 }
 
@@ -101,6 +101,42 @@ if((perso.pospersonnage.x + perso.pospersonnage.w < ennemi.posennemi.x) || (pers
 return 0; // pas de collision
 else
 return 1;
+}
+
+void MoveIA(enemy *ennemi,personnage perso,int *stat,int positionO)
+{
+
+int distance;
+ennemi->direc=0;
+  if(ennemi->posennemi.x>=perso.pospersonnage.x)
+    distance=ennemi->posennemi.x-perso.pospersonnage.x;
+  else
+    distance=perso.pospersonnage.x-ennemi->posennemi.x;
+if(distance<50)
+*stat=1;
+else 
+*stat=0;
+    if(distance<200)
+      {
+        if(ennemi->posennemi.x>=perso.pospersonnage.x)
+          ennemi->direc=0;
+        else
+          ennemi->direc=1;
+      }
+      else
+    {  if(ennemi->posMin>=ennemi->posennemi.x)
+          ennemi->direc=1;
+      if(ennemi->posMax<=ennemi->posennemi.x)
+        ennemi->direc=0;
+	}
+      if(ennemi->direc==1)
+      {
+        ennemi->posennemi.x+=5;
+      }
+      if(ennemi->direc==0)
+      {
+        ennemi->posennemi.x-=5;
+      }
 }
 
 /*
