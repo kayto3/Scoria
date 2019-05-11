@@ -157,6 +157,8 @@ void menuoption(SDL_Surface *ecran,Mix_Chunk *son,int *sound,int *fullscreen)
     {
        
         SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
+
+
         SDL_BlitSurface(plus, NULL, ecran, &positionplus);
         SDL_BlitSurface(minus, NULL, ecran, &positionminus);
         SDL_BlitSurface(barre, NULL, ecran, &positionbarre);
@@ -354,11 +356,10 @@ void niveau1(SDL_Surface *ecran)
 int continuer =1,resultat=0,nv=3;
 personnage perso;
 mini_map m;
-enigme2 e2;
 background back;
 SDL_Surface *image=NULL;
 int frame_limit=0;
-int saut=0,tab_cons[3],delta;
+int saut=0;
 int h=0;
 int curseur_active=0;
 int dep=0;
@@ -398,7 +399,6 @@ initialiser_background(&back);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
 initialiser_mini_map(&m);
-delta=generation_alea&e,tab_cons);
 SDL_EnableKeyRepeat(20,20);
 while (continuer)
 {
@@ -447,8 +447,7 @@ obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la s
 	SDL_Flip(ecran);
 //collision ennemi
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
-ennemi.actif= main_enigme2(ecran,&e,delta)
-//ennemi.actif=enigme(&nv,ecran);
+ennemi.actif=enigme(&nv,ecran);
 //collision objet
 if((collision_obj(perso,obj1,back)==1) && (obj1.actif==0))
 {
