@@ -1,5 +1,5 @@
-prog:main.o menu.o background.o personnage.o enigme.o Ennemi.o mini_map.o objet.o
-	gcc main.o menu.o background.o personnage.o enigme.o Ennemi.o mini_map.o objet.o -o prog -lSDL -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_gfx -g
+prog:main.o menu.o background.o personnage.o enigme.o Ennemi.o mini_map.o objet.o enigme_2.o
+	gcc main.o menu.o background.o personnage.o enigme.o Ennemi.o mini_map.o objet.o enigme_2.o -o prog -lSDL -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_gfx -g
 main.o:main.c
 	gcc -c main.c -lSDL -lSDL_image -lSDL_ttf -lSDL_mixer -g
 menu.o:menu.c
@@ -16,3 +16,5 @@ mini_map.o:mini_map.c
 	gcc -c mini_map.c -g
 objet.o:objet.c
 	gcc -c objet.c -g
+enigme_2.o:enigme_2.c
+	gcc -c enigme_2.c -g
