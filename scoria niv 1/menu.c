@@ -435,7 +435,6 @@ objet_camera(dep,&back,&obj3,perso);
 		printf("tt\n");
 	if((perso.pospersonnage.x-obj1.pos.x < 300) && (obj1.actif==0))
 	affichage_objet(ecran,&obj1);
-	
 	if((perso.pospersonnage.x-obj2.pos.x < 300) && (obj2.actif==0))
 	affichage_objet(ecran,&obj2);
 	if((perso.pospersonnage.x-obj3.pos.x < 300) && (obj3.actif==0))
