@@ -406,7 +406,7 @@ Remplissage_animation_perso(&perso);
 initialiser_mini_map(&m);
 /*init enigme2*/
 delta =generation_alea(&e,tab_cons);
-
+//printf("test\n");
 SDL_EnableKeyRepeat(20,20);
 while (continuer)
 {
@@ -427,11 +427,15 @@ objet_camera(dep,&back,&obj3,perso);
         affichage_background(ecran,&back);
 	SDL_BlitSurface(image,NULL,ecran,&position_vie);
 	maj_score(ecran,&scor,scoree);
+	
 //MINI MAP
 	main_mini_map(ecran,dep,&m,&perso,&back);
+	
 //affichage objet
+		printf("tt\n");
 	if((perso.pospersonnage.x-obj1.pos.x < 300) && (obj1.actif==0))
 	affichage_objet(ecran,&obj1);
+	
 	if((perso.pospersonnage.x-obj2.pos.x < 300) && (obj2.actif==0))
 	affichage_objet(ecran,&obj2);
 	if((perso.pospersonnage.x-obj3.pos.x < 300) && (obj3.actif==0))
@@ -441,18 +445,21 @@ objet_camera(dep,&back,&obj3,perso);
 printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.pospersonnage.y);
 //rotozoom
 Rotozoom(&obj1);
+
 obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
 Rotozoom(&obj2);
 obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
 Rotozoom(&obj3);
 obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
 //affichage ennemi
-	if(ennemi.actif==0)
+	
+if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
 	MoveIA(&ennemi2,perso,&stat,200);
 	if(perso.pospersonnage.x-ennemi2.posennemi.x < 300)
 	affichage_ennemi(ecran,&ennemi2);
 	SDL_Flip(ecran);
+printf("test\n");
 //collision ennemi
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
 //ennemi.actif=enigme(&nv,ecran);

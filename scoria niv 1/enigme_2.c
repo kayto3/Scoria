@@ -74,7 +74,7 @@ for (i=0;i<3;i++)
 }
 printf("%d|%d|%d\n",tab_cons[0],tab_cons[1],tab_cons[2]);
 
-int delta=(tab_cons[1]*tab_cons[1])-4*tab_cons[0]*tab_cons[2];
+int delta=(tab_cons[1]*tab_cons[1])-(4*tab_cons[0]*tab_cons[2]);
 
 return delta;
 }
@@ -91,7 +91,7 @@ int main_enigme2(SDL_Surface *ecran,enigme2 *e,int delta,int tab_cons[])
 	
 	while (continuer)
 	{
-	        SDL_PollEvent(&event);
+	        SDL_WaitEvent(&event);
 	SDL_BlitSurface(e->imagefond, NULL, ecran, &e->pos_fond);
 	//SDL_Flip(ecran);
 	for (i=0;i<3;i++)
@@ -104,9 +104,10 @@ int main_enigme2(SDL_Surface *ecran,enigme2 *e,int delta,int tab_cons[])
 	else if (delta>=0)
 	reponse=1;
 			
-	
+	//printf("%d\n",reponse);
+	printf("cur=%d\n",curseur);
 	SDL_Flip(ecran);
-	
+	printf("x=%d\n y=%d\n",event.motion.x,event.motion.y);
 	switch(event.type)
         {
         case SDL_QUIT:
@@ -128,21 +129,26 @@ int main_enigme2(SDL_Surface *ecran,enigme2 *e,int delta,int tab_cons[])
 		resultat=0;
 		SDL_Delay(300);
             }
+
          break;
 
         case SDL_MOUSEMOTION:
 
-            if ((event.motion.x>169)&&(event.motion.x<269)&& (event.motion.y>221)&&(event.motion.y<295))
+            if ((event.motion.x>223)&&(event.motion.x<340)&& (event.motion.y>292)&&(event.motion.y<382))
             {
                curseur=1;
 
             }
 
-            else if ((event.motion.x>342)&&(event.motion.x<444)&& (event.motion.y>221)&&(event.motion.y<297))
+             else if ((event.motion.x>450)&&(event.motion.x<578)&& (event.motion.y>292)&&(event.motion.y<382))
             {
-                curseur=2;
+                curseur=-1;
             }
-           
+          else
+		curseur=0;
+		
+		
+		
             
 
             break;
