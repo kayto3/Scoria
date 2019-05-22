@@ -456,7 +456,7 @@ obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la s
 //collision ennemi
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
 //ennemi.actif=enigme(&nv,ecran);
-//ennemi.actif=main_enigme2(ecran,&e,delta,tab_cons);
+ennemi.actif=main_enigme2(ecran,&e,delta,tab_cons);
 //collision objet
 if((collision_obj(perso,obj1,back)==1) && (obj1.actif==0))
 {
