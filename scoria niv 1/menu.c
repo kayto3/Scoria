@@ -9,6 +9,7 @@
 #include "Ennemi.h"
 #include "mini_map.h"
 #include "objet.h"
+#include "enigme2.h"
 #define TEMPS       30 // Le temps qu'il y a entre chaque augmentation de l'angle.
 // INITIALISER 
 void Initialiser_Menu(SDL_Surface **ecran,SDL_Surface **imageDeFond,SDL_Surface **bouton1,SDL_Surface **bouton2,SDL_Surface **bouton3,SDL_Surface **bouton4,SDL_Surface **bouton_selection1,SDL_Surface **bouton_selection2,SDL_Surface **bouton_selection3,SDL_Surface **bouton_selection4,SDL_Rect *positionFond,SDL_Rect *posBou1,SDL_Rect *posBou2,SDL_Rect *posBou3,SDL_Rect *posBou4,SDL_Rect *posBouS1,SDL_Rect *posBouS2,SDL_Rect *posBouS3,SDL_Rect *posBouS4,Mix_Music **music,Mix_Chunk **son)
@@ -357,6 +358,10 @@ int continuer =1,resultat=0,nv=3;
 personnage perso;
 mini_map m;
 background back;
+/*ENIGME2*/
+enigme2 e;
+int delta,tab_cons[20];
+
 SDL_Surface *image=NULL;
 int frame_limit=0;
 int saut=0;
@@ -399,6 +404,9 @@ initialiser_background(&back);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
 initialiser_mini_map(&m);
+/*init enigme2*/
+delta =generation_alea(&e,tab_cons);
+
 SDL_EnableKeyRepeat(20,20);
 while (continuer)
 {
@@ -447,7 +455,8 @@ obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la s
 	SDL_Flip(ecran);
 //collision ennemi
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
-ennemi.actif=enigme(&nv,ecran);
+//ennemi.actif=enigme(&nv,ecran);
+//ennemi.actif=main_enigme2(ecran,&e,delta,tab_cons);
 //collision objet
 if((collision_obj(perso,obj1,back)==1) && (obj1.actif==0))
 {
