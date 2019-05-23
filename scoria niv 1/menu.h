@@ -25,4 +25,7 @@ void niveau1(SDL_Surface *ecran,int * niv);
 
 void niveau2(SDL_Surface *ecran,int *niv);
 
+void sauvegarder(int niv, char nom_fich[]);
+void charger(int *niv,char nom_fich[]);
+
 #endif // MENU_H_INCLUDED

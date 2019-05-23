@@ -328,6 +328,18 @@ switch(event.type)
 		if(*niv==2)
 		niveau2(ecran,niv);
             }
+	else if((event.button.button == SDL_BUTTON_LEFT)&&(*curseur==2))
+	    {
+                Mix_PlayChannel(1,son,0);
+		charger(niv,"sauvegarde.bin");
+		if(*niv==1)
+		niveau1(ecran,niv);
+		if(*niv==2)
+		{
+		printf("niv=%d\n",*niv);
+		niveau2(ecran,niv);
+		}
+            }
          break;
 
         case SDL_MOUSEMOTION:
@@ -405,7 +417,6 @@ background back;
 /*ENIGME2*/
 enigme2 e;
 int delta,tab_cons[20];
-
 SDL_Surface *image=NULL;
 int frame_limit=0;
 int saut=0;
@@ -476,7 +487,6 @@ objet_camera(dep,&back,&obj3,perso);
 	main_mini_map(ecran,dep,&m,&perso,&back);
 //rotozoom
 Rotozoom(&obj1);
-
 obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
 Rotozoom(&obj2);
 obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
@@ -544,6 +554,7 @@ continuer=0;
 if(perso.pospersonnage.x>1600)
 {
 *niv=2;
+sauvegarder(*niv,"sauvegarde.bin");
 continuer=0;
 }
 dep=0;
@@ -630,9 +641,16 @@ objet_camera(dep,&back,&obj3,perso);
 	
 //MINI MAP
 	main_mini_map(ecran,dep,&m,&perso,&back);
+
+//rotozoom
+Rotozoom(&obj1);
+obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj2);
+obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj3);
+obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
 	
 //affichage objet
-		printf("tt\n");
 	if((perso.pospersonnage.x-obj1.pos.x < 300) && (obj1.actif==0))
 	affichage_objet(ecran,&obj1);
 	if((perso.pospersonnage.x-obj2.pos.x < 300) && (obj2.actif==0))
@@ -642,14 +660,6 @@ objet_camera(dep,&back,&obj3,perso);
 	Anime_perso(dep,ecran,&perso);
 
 printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.pospersonnage.y);
-//rotozoom
-Rotozoom(&obj1);
-
-obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
-Rotozoom(&obj2);
-obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
-Rotozoom(&obj3);
-obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
 //affichage ennemi
 	
 if(ennemi.actif==0)
@@ -701,12 +711,43 @@ continuer=0;
 if(perso.pospersonnage.x>1600)
 {
 *niv=3;
+sauvegarder(*niv,"sauvegarde.bin");
 continuer=0;
 }
 dep=0;
 }
 SDL_FreeSurface(back.image);
 SDL_FreeSurface(perso.personnage);
+}
+
+void sauvegarder(int niv, char nom_fich[])
+{
+    FILE* fichier;
+    fichier=fopen(nom_fich,"ab");
+    if(fichier!=NULL)
+    {
+        fwrite(&niv,sizeof(int),1,fichier);
+        fclose(fichier);
+    }
+    else
+    {
+        printf("erreur \n");
+    }
+}
+
+void charger(int *niv,char nom_fich[])
+{
+    FILE* fichier;
+    fichier=fopen(nom_fich,"rb");
+    if(fichier!=NULL)
+    {
+        while(fread(niv,sizeof(int),1,fichier)!=0);
+        fclose(fichier);
+    }
+    else
+    {
+        printf("erreur");
+    }
 }
 
 //Free Menu
