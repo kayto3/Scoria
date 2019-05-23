@@ -10,6 +10,7 @@ int main()
     SDL_Surface  *bouton_selection1 = NULL,*bouton_selection2 = NULL,*bouton_selection3 = NULL,*bouton_selection4 = NULL;
     SDL_Rect positionFond, posBou1,posBou2,posBou3,posBou4,posBouS1,posBouS2,posBouS3,posBouS4;
     SDL_Event event;
+	logo logo;
     Mix_Music *music;
     Mix_Chunk *son;
 	int continuer=1,curseur=0, sound=2,fullscreen=0;
@@ -23,6 +24,9 @@ int main()
 	frame_limit=SDL_GetTicks()+33;
 	limit_fps(frame_limit);
 	frame_limit=SDL_GetTicks()+33;
+Remplissage_animation_logo(&logo);
+affichage_logo(ecran,logo);
+SDL_Delay(500);
 //initialiser menu
 Initialiser_Menu(&ecran,&imageDeFond,&bouton1,&bouton2,&bouton3,&bouton4,&bouton_selection1,&bouton_selection2,&bouton_selection3,&bouton_selection4,
 &positionFond,&posBou1,&posBou2,&posBou3,&posBou4,&posBouS1,&posBouS2,&posBouS3,&posBouS4,&music,&son);
@@ -42,6 +46,7 @@ Initialiser_Menu(&ecran,&imageDeFond,&bouton1,&bouton2,&bouton3,&bouton4,&bouton
         input_Menu(event,&curseur,&continuer,ecran,son,&sound,&fullscreen,&niv);
 
         //Affchage_Decale
+	SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format,0,0,0));
 	Affichage_Decale(ecran,imageDeFond,bouton1,bouton2,bouton3,bouton4,bouton_selection1,bouton_selection2,bouton_selection3,bouton_selection4,
 	&positionFond,&posBou1,&posBou2,&posBou3,&posBou4,&posBouS1,&posBouS2,&posBouS3,&posBouS4,curseur);
         SDL_Flip(ecran);

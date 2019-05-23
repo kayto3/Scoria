@@ -11,6 +11,41 @@
 #include "objet.h"
 #include "enigme2.h"
 #define TEMPS       30 // Le temps qu'il y a entre chaque augmentation de l'angle.
+
+//LOGO
+void Remplissage_animation_logo(logo *logo)
+{
+	logo->poslogo.x=0;
+	logo->poslogo.y=-300;
+	logo->image[0]=IMG_Load("logo/logo01.jpg");
+	logo->image[1]=IMG_Load("logo/logo02.jpg");
+	logo->image[2]=IMG_Load("logo/logo03.jpg");
+	logo->image[3]=IMG_Load("logo/logo04.jpg");
+	logo->image[4]=IMG_Load("logo/logo05.jpg");
+	logo->image[5]=IMG_Load("logo/logo06.jpg");
+	logo->image[6]=IMG_Load("logo/logo07.jpg");
+	logo->image[7]=IMG_Load("logo/logo08.jpg");
+	logo->image[8]=IMG_Load("logo/logo09.jpg");
+	logo->image[9]=IMG_Load("logo/logo10.jpg");
+	logo->image[10]=IMG_Load("logo/logo11.jpg");
+	logo->image[11]=IMG_Load("logo/logo12.jpg");
+	logo->image[12]=IMG_Load("logo/logo13.jpg");
+	logo->image[13]=IMG_Load("logo/logo14.jpg");
+	logo->image[14]=IMG_Load("logo/logo15.jpg");
+	logo->image[15]=IMG_Load("logo/logo16.jpg");
+}
+void affichage_logo(SDL_Surface *ecran,logo logo)
+{
+int i=0;
+	for(i=0;i<16;i++)
+	{
+	logo.poslogo.y=-300;
+	SDL_BlitSurface(logo.image[i],NULL,ecran,&logo.poslogo);
+	SDL_Flip(ecran);
+	SDL_Delay(80);
+	}
+}
+
 // INITIALISER 
 void Initialiser_Menu(SDL_Surface **ecran,SDL_Surface **imageDeFond,SDL_Surface **bouton1,SDL_Surface **bouton2,SDL_Surface **bouton3,SDL_Surface **bouton4,SDL_Surface **bouton_selection1,SDL_Surface **bouton_selection2,SDL_Surface **bouton_selection3,SDL_Surface **bouton_selection4,SDL_Rect *positionFond,SDL_Rect *posBou1,SDL_Rect *posBou2,SDL_Rect *posBou3,SDL_Rect *posBou4,SDL_Rect *posBouS1,SDL_Rect *posBouS2,SDL_Rect *posBouS3,SDL_Rect *posBouS4,Mix_Music **music,Mix_Chunk **son)
 {
@@ -286,6 +321,13 @@ switch(event.type)
                 Mix_PlayChannel(1,son,0);
 		*continuer=0;
             }
+	else if((event.button.button == SDL_BUTTON_LEFT)&&(*curseur==1))
+	    {
+                Mix_PlayChannel(1,son,0);
+		niveau1(ecran,niv);
+		if(*niv==2)
+		niveau2(ecran,niv);
+            }
          break;
 
         case SDL_MOUSEMOTION:
@@ -327,17 +369,17 @@ switch(event.type)
                 *curseur=*curseur+1;
                 break;
             case SDLK_RETURN:
-                if ((event.button.button == SDL_BUTTON_LEFT)&&(*curseur==3))
+                if (*curseur==3)
             {
                 Mix_PlayChannel(1,son,0);
 		menuoption(ecran,son,sound,fullscreen);
             }
-	else if((event.button.button == SDL_BUTTON_LEFT)&&(*curseur==4))
+	else if(*curseur==4)
 	    {
                 Mix_PlayChannel(1,son,0);
 		*continuer=0;
             }
-	else if((event.button.button == SDL_BUTTON_LEFT)&&(*curseur==1))
+	else if(*curseur==1)
 	    {
                 Mix_PlayChannel(1,son,0);
 		niveau1(ecran,niv);

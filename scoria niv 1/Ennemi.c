@@ -32,7 +32,6 @@ void Remplissage_animation (mouvement *mvt)
  mvt-> mvt_avant [4]=IMG_Load("walk5.png");
  mvt-> mvt_avant [5]=IMG_Load("walk6.png");
  mvt-> mvt_avant [6]=IMG_Load("walk7.png");
-
  mvt-> mvt_back [0]=IMG_Load("walk8.png");
  mvt-> mvt_back [1]=IMG_Load("walk9.png");
  mvt-> mvt_back [2]=IMG_Load("walk10.png");
