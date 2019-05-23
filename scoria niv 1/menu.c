@@ -397,9 +397,19 @@ switch(event.type)
 		niveau1(ecran,niv);
 		if(*niv==2)
 		niveau2(ecran,niv);
-		
             }
-               
+	else if(*curseur==2)
+	    {
+                Mix_PlayChannel(1,son,0);
+		charger(niv,"sauvegarde.bin");
+		if(*niv==1)
+		niveau1(ecran,niv);
+		if(*niv==2)
+		{
+		printf("niv=%d\n",*niv);
+		niveau2(ecran,niv);
+		}
+             }
                 break;
             }
 
@@ -507,6 +517,7 @@ printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.posperson
 	
 if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
+if(ennemi2.actif==0)
 	MoveIA(&ennemi2,perso,&stat,200,&mvt,ecran);
 	SDL_Flip(ecran);
 printf("test\n");
@@ -514,6 +525,8 @@ printf("test\n");
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
 //ennemi.actif=enigme(&nv,ecran);
 ennemi.actif=main_enigme2(ecran,&e,delta,tab_cons);
+if((collision_entite(perso,ennemi2,back)==1) && (ennemi2.actif==0))
+ennemi2.actif=enigme(&nv,ecran);
 //collision objet
 if((collision_obj(perso,obj1,back)==1) && (obj1.actif==0))
 {
@@ -664,6 +677,7 @@ printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.posperson
 	
 if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
+if(ennemi2.actif==0)
 	MoveIA(&ennemi2,perso,&stat,200,&mvt,ecran);
 	SDL_Flip(ecran);
 printf("test\n");
@@ -671,6 +685,8 @@ printf("test\n");
 if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
 //ennemi.actif=enigme(&nv,ecran);
 ennemi.actif=main_enigme2(ecran,&e,delta,tab_cons);
+if((collision_entite(perso,ennemi2,back)==1) && (ennemi2.actif==0))
+ennemi2.actif=enigme(&nv,ecran);
 //collision objet
 if((collision_obj(perso,obj1,back)==1) && (obj1.actif==0))
 {
