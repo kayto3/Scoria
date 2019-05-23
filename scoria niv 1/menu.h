@@ -22,8 +22,8 @@ void input_Menu(SDL_Event event,int *curseur,int *continuer,SDL_Surface *ecran,M
 
 void Free_Menu(SDL_Surface *ecran,SDL_Surface *imageDeFond,SDL_Surface *bouton1,SDL_Surface *bouton2,SDL_Surface *bouton3,SDL_Surface *bouton4,SDL_Surface *bouton_selection1,SDL_Surface *bouton_selection2,SDL_Surface *bouton_selection3,SDL_Surface *bouton_selection4);
 void niveau1(SDL_Surface *ecran,int * niv);
-
 void niveau2(SDL_Surface *ecran,int *niv);
+void niveau3(SDL_Surface *ecran,int *niv);
 
 void sauvegarder(int niv, char nom_fich[]);
 void charger(int *niv,char nom_fich[]);

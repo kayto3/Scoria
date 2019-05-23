@@ -10,6 +10,8 @@ void initialiser_mini_map(mini_map *m,int niv)
 	m->map=IMG_Load("mini.png");
 	if(niv==2)
 	m->map=IMG_Load("mini2.png");
+	if(niv==3)
+	m->map=IMG_Load("mini3.png");
 	m->pointer=IMG_Load("mlm.png");
 	m->pos_map.x=300;
 	m->pos_map.y=0;

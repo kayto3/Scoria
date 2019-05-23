@@ -26,6 +26,11 @@ if(niv==2)
 back->image = IMG_Load("background_niveau2.png");
 back->imageM = SDL_LoadBMP("background_niveau2_masque.bmp");
 }
+if(niv==3)
+{
+back->image = IMG_Load("background_niveau3.png");
+back->imageM = SDL_LoadBMP("background_niveau3_masque.bmp");
+}
 }
 
 

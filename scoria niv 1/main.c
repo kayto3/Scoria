@@ -35,6 +35,7 @@ Initialiser_Menu(&ecran,&imageDeFond,&bouton1,&bouton2,&bouton3,&bouton4,&bouton
     {
 	niv=1;
         //Affichage_initial
+	SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format,0,0,0));
 	Affichage_initial(ecran,imageDeFond,bouton1,bouton2,bouton3,bouton4,&positionFond,&posBou1,&posBou2,&posBou3,&posBou4);
 	Mix_VolumeMusic(MIX_MAX_VOLUME / sound);
         SDL_WaitEvent(&event);
@@ -46,7 +47,6 @@ Initialiser_Menu(&ecran,&imageDeFond,&bouton1,&bouton2,&bouton3,&bouton4,&bouton
         input_Menu(event,&curseur,&continuer,ecran,son,&sound,&fullscreen,&niv);
 
         //Affchage_Decale
-	SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format,0,0,0));
 	Affichage_Decale(ecran,imageDeFond,bouton1,bouton2,bouton3,bouton4,bouton_selection1,bouton_selection2,bouton_selection3,bouton_selection4,
 	&positionFond,&posBou1,&posBou2,&posBou3,&posBou4,&posBouS1,&posBouS2,&posBouS3,&posBouS4,curseur);
         SDL_Flip(ecran);
