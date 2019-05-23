@@ -29,6 +29,7 @@ Initialiser_Menu(&ecran,&imageDeFond,&bouton1,&bouton2,&bouton3,&bouton4,&bouton
     Mix_PlayMusic(music,-1); 
     while (continuer)
     {
+	niv=1;
         //Affichage_initial
 	Affichage_initial(ecran,imageDeFond,bouton1,bouton2,bouton3,bouton4,&positionFond,&posBou1,&posBou2,&posBou3,&posBou4);
 	Mix_VolumeMusic(MIX_MAX_VOLUME / sound);

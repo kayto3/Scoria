@@ -3,10 +3,13 @@
 #include <SDL/SDL_mixer.h>
 #include "mini_map.h"
 #include "background.h"
-void initialiser_mini_map(mini_map *m)
+void initialiser_mini_map(mini_map *m,int niv)
 {
 //100/5=20
+	if(niv==1)
 	m->map=IMG_Load("mini.png");
+	if(niv==2)
+	m->map=IMG_Load("mini2.png");
 	m->pointer=IMG_Load("mlm.png");
 	m->pos_map.x=300;
 	m->pos_map.y=0;

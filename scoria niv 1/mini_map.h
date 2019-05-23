@@ -10,7 +10,7 @@ typedef struct
 	SDL_Rect camera;
 }mini_map;
 	
-void initialiser_mini_map(mini_map *m);
+void initialiser_mini_map(mini_map *m,int niv);
 void afficher_map(SDL_Surface *ecran,mini_map *m);
 void afficher_pointer(SDL_Surface *ecran,mini_map *m);
 void main_mini_map(SDL_Surface *ecran,int dep,mini_map *m,personnage *perso,background *back);

@@ -405,7 +405,7 @@ initialiser_score(&scor,10,90);
 initialiser_background(&back,*niv);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
-initialiser_mini_map(&m);
+initialiser_mini_map(&m,*niv);
 /*init enigme2*/
 delta =generation_alea(&e,tab_cons);
 //printf("test\n");
@@ -561,7 +561,7 @@ initialiser_score(&scor,10,90);
 initialiser_background(&back,*niv);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
-initialiser_mini_map(&m);
+initialiser_mini_map(&m,*niv);
 /*init enigme2*/
 delta =generation_alea(&e,tab_cons);
 //printf("test\n");
