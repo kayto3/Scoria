@@ -26,7 +26,7 @@ mouvement2 mvt;
 int i,j;
 }personnage;
 
-void initialiser_background(background *back);
+void initialiser_background(background *back,int niv);
 void initialiser_camera(background *back);
 void affichage_background(SDL_Surface *ecran,background *back);
 SDL_Color GetPixel(SDL_Surface *pSurface,int x,int y);

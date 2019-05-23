@@ -13,8 +13,9 @@ int main()
     Mix_Music *music;
     Mix_Chunk *son;
 	int continuer=1,curseur=0, sound=2,fullscreen=0;
+	int niv=1;
 	int frame_limit=0;
-    ecran = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF  );
+    ecran = SDL_SetVideoMode(1920, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF  );
     Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,MIX_DEFAULT_CHANNELS,1024);
     SDL_Init(SDL_INIT_VIDEO);
     SDL_WM_SetIcon(SDL_LoadBMP("logo.bmp"), NULL);
@@ -37,7 +38,7 @@ Initialiser_Menu(&ecran,&imageDeFond,&bouton1,&bouton2,&bouton3,&bouton4,&bouton
         if(curseur>4)
             curseur=1;
         // imput_Menu
-        input_Menu(event,&curseur,&continuer,ecran,son,&sound,&fullscreen);
+        input_Menu(event,&curseur,&continuer,ecran,son,&sound,&fullscreen,&niv);
 
         //Affchage_Decale
 	Affichage_Decale(ecran,imageDeFond,bouton1,bouton2,bouton3,bouton4,bouton_selection1,bouton_selection2,bouton_selection3,bouton_selection4,

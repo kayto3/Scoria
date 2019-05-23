@@ -8,16 +8,24 @@ void initialiser_camera(background *back)
 {
 back->camera.x=0;
 back->camera.y=0;
-back->camera.w=800;
+back->camera.w=1920;
 back->camera.h=600;
 }
 
-void initialiser_background(background *back)
+void initialiser_background(background *back,int niv)
 {
 back->positionecran.x=0;
 back->positionecran.y=0;
+if(niv==1)
+{
 back->image = IMG_Load("background_ex.png");
 back->imageM = SDL_LoadBMP("background_ex_masque.bmp");
+}
+if(niv==2)
+{
+back->image = IMG_Load("background_niveau2.png");
+back->imageM = SDL_LoadBMP("background_niveau2_masque.bmp");
+}
 }
 
 
@@ -157,9 +165,9 @@ void scrolling(int dep,int saut,int h,background *back,personnage *perso,int *cu
 				
 		if(perso->vx>0)
 		{
-			if (back->camera.x<6363)
+			if (back->camera.x<4000)
                 		back->camera.x=back->camera.x+perso->vx;
-			if (((perso->pospersonnage.x<300)||((back->camera.x>=6363))&&(perso->pospersonnage.x<1100)))
+			if (((perso->pospersonnage.x<300)||((back->camera.x>=4000))&&(perso->pospersonnage.x<1600)))
 				perso->pospersonnage.x=perso->pospersonnage.x+perso->vx;
 			if(perso->pospersonnage.x>=*curseur_x)
 			*curseur_active=0;

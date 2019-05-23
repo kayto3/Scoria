@@ -268,7 +268,7 @@ void menuoption(SDL_Surface *ecran,Mix_Chunk *son,int *sound,int *fullscreen)
 }
 
 
-void input_Menu(SDL_Event event,int *curseur,int *continuer,SDL_Surface *ecran,Mix_Chunk *son,int *sound,int *fullscreen)
+void input_Menu(SDL_Event event,int *curseur,int *continuer,SDL_Surface *ecran,Mix_Chunk *son,int *sound,int *fullscreen,int *niv)
 {
 switch(event.type)
         {
@@ -340,7 +340,9 @@ switch(event.type)
 	else if((event.button.button == SDL_BUTTON_LEFT)&&(*curseur==1))
 	    {
                 Mix_PlayChannel(1,son,0);
-		niveau1(ecran);
+		niveau1(ecran,niv);
+		if(*niv==2)
+		niveau2(ecran,niv);
 		
             }
                
@@ -352,7 +354,7 @@ switch(event.type)
 
 }
 
-void niveau1(SDL_Surface *ecran)
+void niveau1(SDL_Surface *ecran,int *niv)
 {
 int continuer =1,resultat=0,nv=3;
 personnage perso;
@@ -400,7 +402,7 @@ initialiser_objet(&obj1,1010,180);
 initialiser_objet(&obj2,2544,180);
 initialiser_objet(&obj3,4324,230);
 initialiser_score(&scor,10,90);
-initialiser_background(&back);
+initialiser_background(&back,*niv);
 Remplissage_animation (&mvt);
 Remplissage_animation_perso(&perso);
 initialiser_mini_map(&m);
@@ -479,12 +481,13 @@ if((collision_obj(perso,obj3,back)==1) && (obj3.actif==0))
 obj3.actif=1;
 scoree++;
 }
+//joueur tombe
 if (perso.pospersonnage.y >= 600)
 {
 nv --;
 initialiser_camera(&back);
 initialiser_personnage(&perso);
-initialiser_background(&back);
+initialiser_background(&back,*niv);
 initialiser_ennemi (&ennemi,1800,320,2300,1500);
 initialiser_ennemi (&ennemi2,3500,320,3800,3200);
 initialiser_objet(&obj1,1010,180);
@@ -496,6 +499,171 @@ image = IMG_Load("Fichier 11_1.png");
 else if(nv == 1)
 image = IMG_Load("Fichier 10_1.png");
 else if(nv == 0)
+continuer=0;
+}
+//jouer fin niveau
+if(perso.pospersonnage.x>1600)
+{
+*niv=2;
+continuer=0;
+}
+dep=0;
+}
+SDL_FreeSurface(back.image);
+SDL_FreeSurface(perso.personnage);
+}
+
+void niveau2(SDL_Surface *ecran,int *niv)
+{
+int continuer =1,resultat=0,nv=3;
+personnage perso;
+mini_map m;
+background back;
+/*ENIGME2*/
+enigme2 e;
+int delta,tab_cons[20];
+
+SDL_Surface *image=NULL;
+int frame_limit=0;
+int saut=0;
+int h=0;
+int curseur_active=0;
+int dep=0;
+int curseur_x;
+int stat=0;
+//score
+score scor;
+int scoree=0;
+int tempsPrecedent = 0, tempsActuel = 0;
+SDL_Rect position_vie;
+//ennemi
+enemy ennemi,ennemi2;
+mouvement mvt;
+objet obj1,obj2,obj3;
+obj1.actif=0;
+obj2.actif=0;
+obj3.actif=0;
+ennemi.actif=0;
+int i=0,j=0;
+image=IMG_Load("Fichier 12_1.png");
+position_vie.x=10;
+position_vie.y=10;
+SDL_Event event;
+frame_limit=SDL_GetTicks()+33;
+limit_fps(frame_limit);
+frame_limit=SDL_GetTicks()+33;
+//initialiser
+initialiser_camera(&back);
+initialiser_personnage(&perso);
+initialiser_ennemi (&ennemi,1800,320,2300,1500);
+initialiser_ennemi (&ennemi2,3500,320,3800,3200);
+initialiser_objet(&obj1,1010,180);
+initialiser_objet(&obj2,2544,180);
+initialiser_objet(&obj3,4324,230);
+initialiser_score(&scor,10,90);
+initialiser_background(&back,*niv);
+Remplissage_animation (&mvt);
+Remplissage_animation_perso(&perso);
+initialiser_mini_map(&m);
+/*init enigme2*/
+delta =generation_alea(&e,tab_cons);
+//printf("test\n");
+SDL_EnableKeyRepeat(20,20);
+while (continuer)
+{
+SDL_PollEvent(&event);
+choix_commande(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
+deplacement_souris(&event,&continuer,&perso,&back,&saut,&h,&curseur_active,&curseur_x,&dep);
+deplacement_perso(&perso,dep,saut);
+gravity(&perso,&back,&saut,&h);
+scrolling(dep,saut,h,&back,&perso,&curseur_active,&curseur_x);
+ennemi_camera(dep,&back,&ennemi,perso);
+ennemi_camera(dep,&back,&ennemi2,perso);
+objet_camera(dep,&back,&obj1,perso);
+objet_camera(dep,&back,&obj2,perso);
+objet_camera(dep,&back,&obj3,perso);
+
+
+//affichage
+        affichage_background(ecran,&back);
+	SDL_BlitSurface(image,NULL,ecran,&position_vie);
+	maj_score(ecran,&scor,scoree);
+	
+//MINI MAP
+	main_mini_map(ecran,dep,&m,&perso,&back);
+	
+//affichage objet
+		printf("tt\n");
+	if((perso.pospersonnage.x-obj1.pos.x < 300) && (obj1.actif==0))
+	affichage_objet(ecran,&obj1);
+	if((perso.pospersonnage.x-obj2.pos.x < 300) && (obj2.actif==0))
+	affichage_objet(ecran,&obj2);
+	if((perso.pospersonnage.x-obj3.pos.x < 300) && (obj3.actif==0))
+	affichage_objet(ecran,&obj3);
+	Anime_perso(dep,ecran,&perso);
+
+printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.pospersonnage.y);
+//rotozoom
+Rotozoom(&obj1);
+
+obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj2);
+obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj3);
+obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
+//affichage ennemi
+	
+if(ennemi.actif==0)
+	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
+	MoveIA(&ennemi2,perso,&stat,200);
+	if(perso.pospersonnage.x-ennemi2.posennemi.x < 300)
+	affichage_ennemi(ecran,&ennemi2);
+	SDL_Flip(ecran);
+printf("test\n");
+//collision ennemi
+if((collision_entite(perso,ennemi,back)==1) && (ennemi.actif==0))
+//ennemi.actif=enigme(&nv,ecran);
+ennemi.actif=main_enigme2(ecran,&e,delta,tab_cons);
+//collision objet
+if((collision_obj(perso,obj1,back)==1) && (obj1.actif==0))
+{
+obj1.actif=1;
+scoree++;
+}
+if((collision_obj(perso,obj2,back)==1) && (obj2.actif==0))
+{
+obj2.actif=1;
+scoree++;
+}
+if((collision_obj(perso,obj3,back)==1) && (obj3.actif==0))
+{
+obj3.actif=1;
+scoree++;
+}
+//joueur tombe
+if (perso.pospersonnage.y >= 600)
+{
+nv --;
+initialiser_camera(&back);
+initialiser_personnage(&perso);
+initialiser_background(&back,*niv);
+initialiser_ennemi (&ennemi,1800,320,2300,1500);
+initialiser_ennemi (&ennemi2,3500,320,3800,3200);
+initialiser_objet(&obj1,1010,180);
+initialiser_objet(&obj2,2544,180);
+initialiser_objet(&obj3,4324,230);
+initialiser_score(&scor,10,90);
+if (nv == 2)
+image = IMG_Load("Fichier 11_1.png");
+else if(nv == 1)
+image = IMG_Load("Fichier 10_1.png");
+else if(nv == 0)
+continuer=0;
+}
+//jouer fin niveau
+if(perso.pospersonnage.x>1600)
+{
+*niv=3;
 continuer=0;
 }
 dep=0;

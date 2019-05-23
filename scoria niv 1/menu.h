@@ -9,9 +9,11 @@ void Affichage_Decale(SDL_Surface *ecran,SDL_Surface *imageDeFond,SDL_Surface *b
 
 void menuoption(SDL_Surface *ecran,Mix_Chunk *son,int *sound,int *fullscreen);
 
-void input_Menu(SDL_Event event,int *curseur,int *continuer,SDL_Surface *ecran,Mix_Chunk *son,int *sound,int *fullscreen);
+void input_Menu(SDL_Event event,int *curseur,int *continuer,SDL_Surface *ecran,Mix_Chunk *son,int *sound,int *fullscreen,int *niv);
 
 void Free_Menu(SDL_Surface *ecran,SDL_Surface *imageDeFond,SDL_Surface *bouton1,SDL_Surface *bouton2,SDL_Surface *bouton3,SDL_Surface *bouton4,SDL_Surface *bouton_selection1,SDL_Surface *bouton_selection2,SDL_Surface *bouton_selection3,SDL_Surface *bouton_selection4);
-void niveau1(SDL_Surface *ecran);
+void niveau1(SDL_Surface *ecran,int * niv);
+
+void niveau2(SDL_Surface *ecran,int *niv);
 
 #endif // MENU_H_INCLUDED
