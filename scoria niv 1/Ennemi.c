@@ -76,7 +76,7 @@ void ennemi_camera(int dep,background *back,enemy *ennemi,personnage perso)
 {
 		if(perso.vx>0)
 		{
-			if (back->camera.x<6363)
+			if (back->camera.x<4000)
 			{
                 		ennemi->posennemi.x=ennemi->posennemi.x-perso.vx;
 				ennemi->posMin=ennemi->posMin-perso.vx;
