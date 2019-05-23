@@ -432,6 +432,14 @@ objet_camera(dep,&back,&obj3,perso);
 	
 //MINI MAP
 	main_mini_map(ecran,dep,&m,&perso,&back);
+//rotozoom
+Rotozoom(&obj1);
+
+obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj2);
+obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
+Rotozoom(&obj3);
+obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
 	
 //affichage objet
 		printf("tt\n");
@@ -442,16 +450,7 @@ objet_camera(dep,&back,&obj3,perso);
 	if((perso.pospersonnage.x-obj3.pos.x < 300) && (obj3.actif==0))
 	affichage_objet(ecran,&obj3);
 	Anime_perso(dep,ecran,&perso);
-
 printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.pospersonnage.y);
-//rotozoom
-Rotozoom(&obj1);
-
-obj1.rotation=rotozoomSurface(obj1.image,obj1.angle,1.0,1); //On transforme la surface image.
-Rotozoom(&obj2);
-obj2.rotation=rotozoomSurface(obj2.image,obj2.angle,1.0,1); //On transforme la surface image.
-Rotozoom(&obj3);
-obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
 //affichage ennemi
 	
 if(ennemi.actif==0)
