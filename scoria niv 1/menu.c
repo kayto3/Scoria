@@ -442,7 +442,7 @@ Rotozoom(&obj3);
 obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la surface image.
 	
 //affichage objet
-		printf("tt\n");
+	printf("tt\n");
 	if((perso.pospersonnage.x-obj1.pos.x < 300) && (obj1.actif==0))
 	affichage_objet(ecran,&obj1);
 	if((perso.pospersonnage.x-obj2.pos.x < 300) && (obj2.actif==0))
@@ -455,9 +455,7 @@ printf("perso: %d  /  %d \n",perso.pospersonnage.x+back.camera.x,perso.posperson
 	
 if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
-	MoveIA(&ennemi2,perso,&stat,200);
-	if(perso.pospersonnage.x-ennemi2.posennemi.x < 300)
-	affichage_ennemi(ecran,&ennemi2);
+	MoveIA(&ennemi2,perso,&stat,200,&mvt,ecran);
 	SDL_Flip(ecran);
 printf("test\n");
 //collision ennemi
@@ -554,11 +552,11 @@ frame_limit=SDL_GetTicks()+33;
 //initialiser
 initialiser_camera(&back);
 initialiser_personnage(&perso);
-initialiser_ennemi (&ennemi,1800,320,2300,1500);
-initialiser_ennemi (&ennemi2,3500,320,3800,3200);
+initialiser_ennemi (&ennemi,1800,320,1946,943);
+initialiser_ennemi (&ennemi2,3500,320,3700,2576);
 initialiser_objet(&obj1,1010,180);
 initialiser_objet(&obj2,2544,180);
-initialiser_objet(&obj3,4324,230);
+initialiser_objet(&obj3,4191,180);
 initialiser_score(&scor,10,90);
 initialiser_background(&back,*niv);
 Remplissage_animation (&mvt);
@@ -614,9 +612,7 @@ obj3.rotation=rotozoomSurface(obj3.image,obj3.angle,1.0,1); //On transforme la s
 	
 if(ennemi.actif==0)
 	Deplacement_annime(&mvt,&ennemi,&back,ecran,&perso);
-	MoveIA(&ennemi2,perso,&stat,200);
-	if(perso.pospersonnage.x-ennemi2.posennemi.x < 300)
-	affichage_ennemi(ecran,&ennemi2);
+	MoveIA(&ennemi2,perso,&stat,200,&mvt,ecran);
 	SDL_Flip(ecran);
 printf("test\n");
 //collision ennemi
@@ -646,11 +642,11 @@ nv --;
 initialiser_camera(&back);
 initialiser_personnage(&perso);
 initialiser_background(&back,*niv);
-initialiser_ennemi (&ennemi,1800,320,2300,1500);
-initialiser_ennemi (&ennemi2,3500,320,3800,3200);
+initialiser_ennemi (&ennemi,1800,320,1946,943);
+initialiser_ennemi (&ennemi2,3500,320,3700,2576);
 initialiser_objet(&obj1,1010,180);
 initialiser_objet(&obj2,2544,180);
-initialiser_objet(&obj3,4324,230);
+initialiser_objet(&obj3,4191,180);
 initialiser_score(&scor,10,90);
 if (nv == 2)
 image = IMG_Load("Fichier 11_1.png");

@@ -103,7 +103,7 @@ else
 return 1;
 }
 
-void MoveIA(enemy *ennemi,personnage perso,int *stat,int positionO)
+void MoveIA(enemy *ennemi,personnage perso,int *stat,int positionO,mouvement *mvt,SDL_Surface *ecran)
 {
 
 int distance;
@@ -132,10 +132,20 @@ else
       if(ennemi->direc==1)
       {
         ennemi->posennemi.x+=5;
+	if(perso.pospersonnage.x-ennemi->posennemi.x < 300)
+	SDL_BlitSurface(mvt->mvt_avant[ennemi->i],NULL,ecran,&ennemi->posennemi);	
+	ennemi->i++;
+	if (ennemi->i==6)
+	ennemi->i=0;
       }
       if(ennemi->direc==0)
       {
         ennemi->posennemi.x-=5;
+		if(perso.pospersonnage.x-ennemi->posennemi.x < 300)
+		SDL_BlitSurface(mvt->mvt_back[ennemi->j],NULL,ecran,&ennemi->posennemi);
+		ennemi->j++;
+		if (ennemi->j==	6)
+		ennemi->j=0;
       }
 }
 
